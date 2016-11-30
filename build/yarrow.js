@@ -19,7 +19,7 @@
       var a = new Arrow(this, _, el);
       arrows.push(a);
       return a;
-    }
+    };
 
     yarrow.arrows = function(_, el){
       if (!arguments.length) return arrows;
@@ -27,30 +27,30 @@
 
       var self = this;
       _.forEach(function(_){
-        arrows.push(new Arrow(self, _, el))
-      })
+        arrows.push(new Arrow(self, _, el));
+      });
       return this;
-    }
+    };
 
     yarrow.remove = function remove(id){
       for (var i = -1, n = arrows.length; i++ < n;) {
         if (arrows[i].id === id) return arrows.splice(i, 1);
       }
-    }
+    };
 
     yarrow.renderAll = function(){
       arrows.forEach(function(a){ a.render(); });
       return this;
-    }
+    };
 
     yarrow.disposeAll = function(){
       var _arrows = arrows.slice();
       _arrows.forEach(function(a){ a.dispose(); });
       return this;
-    }
+    };
 
     return yarrow;
-  }
+  };
 
   // Arrow
   var Arrow = function(parent, opts, el){
@@ -122,11 +122,16 @@
         , h = rect.bottom - rect.top
         , offset = getOffset(element)
         , rootOffset = getOffset(rootElement)
-      ;
+        , top = offset.top - rootOffset.top
+        , left = offset.left - rootOffset.left
+        ;
+
       return {
         element: element,
-        top: offset.top - rootOffset.top,
-        left: offset.left - rootOffset.left,
+        top: top,
+        left: left,
+        bottom: top + h,
+        right: left + w,
         width: w,
         height: h
       };
@@ -272,10 +277,10 @@
 
       if (_.textReverseDirection) {
         g.append('path').attrs({
-            id: 'path_reverse_' + id,
-            d: utils.inversePath(typeof _.d === 'function' ? _.d(_, utils) : _.d)
-          })
-          .style('display', 'none');
+          id: 'path_reverse_' + id,
+          d: utils.inversePath(typeof _.d === 'function' ? _.d(_, utils) : _.d)
+        })
+        .style('display', 'none');
       }
       var label = g.append('text')
         .attrs({
@@ -301,19 +306,19 @@
           textPath.styles({
             transition: 'all ' + (_.duration / 1000) + 's linear',
             opacity: 1
-          })
-        }, _.delay + 10)
+          });
+        }, _.delay + 10);
       }
 
       return this;
-    }
+    };
 
     arrow.dispose = function(dur, delay){
       var el = root.select('#' + id);
       parent.remove(id);
 
       if (delay) {
-        setTimeout(function(){ remove(el, dur) }, delay);
+        setTimeout(function(){ remove(el, dur); }, delay);
       } else {
         remove(el, dur);
       }
@@ -332,7 +337,7 @@
           return el.remove();
         }, dur);
       }
-    }
+    };
 
     // get/set multiple specific options
     arrow.options = function(opts){
@@ -341,129 +346,129 @@
         if (_.hasOwnProperty(k)) _[k] = opts[k];
       }
       return this;
-    }
+    };
 
     // get/set specific options
     arrow.x1 = function(v){
       if (!arguments.length) return _.x1;
       _.x1 = v;
       return this;
-    }
+    };
     arrow.y1 = function(v){
       if (!arguments.length) return _.y1;
       _.y1 = v;
       return this;
-    }
+    };
     arrow.x2 = function(v){
       if (!arguments.length) return _.x2;
       _.x2 = v;
       return this;
-    }
+    };
     arrow.y2 = function(v){
       if (!arguments.length) return _.y2;
       _.y2 = v;
       return this;
-    }
+    };
     arrow.source = function(v){
       if (!arguments.length) return _.source;
       _.source = v;
       setCoords();
       return this;
-    }
+    };
     arrow.target = function(v){
       if (!arguments.length) return _.target;
       _.target = v;
       setCoords();
       return this;
-    }
+    };
     arrow.duration = function(v){
       if (!arguments.length) return _.duration;
       _.duration = v;
       return this;
-    }
+    };
     arrow.delay = function(v){
       if (!arguments.length) return _.delay;
       _.delay = v;
       return this;
-    }
+    };
     arrow.d = function(v){
       if (!arguments.length) return _.d;
       _.d = v;
       return this;
-    }
+    };
     arrow.duration1 = function(v){
       if (!arguments.length) return _.duration1;
       _.duration1 = v;
       return this;
-    }
+    };
     arrow.delay1 = function(v){
       if (!arguments.length) return _.delay1;
       _.delay1 = v;
       return this;
-    }
+    };
     arrow.d1 = function(v){
       if (!arguments.length) return _.d1;
       _.d1 = v;
       return this;
-    }
+    };
     arrow.duration2 = function(v){
       if (!arguments.length) return _.duration2;
       _.duration2 = v;
       return this;
-    }
+    };
     arrow.delay2 = function(v){
       if (!arguments.length) return _.delay2;
       _.delay2 = v;
       return this;
-    }
+    };
     arrow.d2 = function(v){
       if (!arguments.length) return _.d1;
       _.d1 = v;
       return this;
-    }
+    };
     arrow.arrowStyles = function(v){
       if (!arguments.length) return _.arrowStyles;
       _.arrowStyles = v;
       return this;
-    }
+    };
     arrow.text = function(v){
       if (!arguments.length) return _.text;
       _.text = v;
       return this;
-    }
+    };
     arrow.textReverseDirection = function(v){
       if (!arguments.length) return _.textReverseDirection;
       _.textReverseDirection = v;
       return this;
-    }
+    };
     arrow.textStartOffset = function(v){
       if (!arguments.length) return _.textStartOffset;
       _.textStartOffset = v;
       return this;
-    }
+    };
     arrow.textDx = function(v){
       if (!arguments.length) return _.textDx;
       _.textDx = v;
       return this;
-    }
+    };
     arrow.textDy = function(v){
       if (!arguments.length) return _.textDy;
       _.textDy = v;
       return this;
-    }
+    };
     arrow.textStyles = function(v){
       if (!arguments.length) return _.textStyles;
       _.textStyles = v;
       return this;
-    }
+    };
     arrow.margin = function(v){
       if (!arguments.length) return _.margin;
       _.margin = Object.assign({}, _.margin, v);
       return this;
-    }
+    };
 
     return arrow;
-  }
+  };
 
   // extend selection with attrs and styles
   function extendSelection(){
@@ -475,13 +480,13 @@
         this.attr(name, attrs[name]);
       }
       return this;
-    }
+    };
     s.prototype.styles = function(styles, priority){
       for (var name in styles) {
         this.style(name, styles[name], priority);
       }
       return this;
-    }
+    };
   }
 
   exports.Yarrow = Yarrow;
