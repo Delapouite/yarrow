@@ -2,7 +2,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-selection'), require('svg-path-utils')) :
   typeof define === 'function' && define.amd ? define(['exports', 'd3-selection', 'svg-path-utils'], factory) :
-  (factory((global.yarrow = global.yarrow || {}),global.d3_selection,global.svg_path_utils));
+  (factory((global.yarrow = global.yarrow || {}),global.d3,global.svg_path_utils));
 }(this, function (exports,d3s,svgPathUtils) { 'use strict';
 
   // Yarrow
